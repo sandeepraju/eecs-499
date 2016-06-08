@@ -31,14 +31,19 @@ def write_text(img, text):
     # place text on the image
     # handle multiple lines of text
     # REJECTED PULL REQUEST: https://github.com/Itseez/opencv/pull/313
-    for line in text.split('\n'):
+    for line in text:
         cv2.putText(
             img, line, start_pos, font, font_scale, text_color,
             thickness, line_type, bottom_left_origin)
         start_pos = (start_pos[0], start_pos[1] + font_height)
 
     return img
-    
+
+def save_image(img, filepath):
+    # save the image
+    cv2.imwrite(filepath, img)
+
+
 def main():
     filepath = sys.argv[1]
 
@@ -63,11 +68,9 @@ molestie sagittis. Cras ac elementum mauris.
 Maecenas tincidunt dui sit amet ipsum cursus finibus. 
 Etiam et est massa. Duis molestie odio nisi, in 
 semper sem congue at. Aliquam sit amet nulla tortor."""
-    img = write_text(img, text)
-    
-    # save the image
-    cv2.imwrite(filepath, img)
+    img = write_text(img, text.split('\n'))
 
+    save_image(img, filepath)
 
 if __name__ == '__main__':
     main()
